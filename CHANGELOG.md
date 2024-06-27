@@ -9,6 +9,10 @@
 - Trade Page
 - Portfolio Page
 
+## [0.0.1] - 2024-06-27
+### Changed
+- Project folder structure
+
 ## [0.0.0] - 2024-06-27
 ### Added
 - Dockerfile

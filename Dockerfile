@@ -1,9 +1,9 @@
 # Build Stage
-FROM node:22 as build-stage
+FROM node:22-alpine as build-stage
 WORKDIR /app
-COPY package*.json ./
+COPY ./src/stock-trading-vue/package*.json ./
 RUN npm install
-COPY . .
+COPY ./src/stock-trading-vue ./
 RUN npm run build
 
 # Production stage
