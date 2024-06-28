@@ -9,6 +9,14 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.2] - 2024-06-28
+### Added
+- Typescript
+- Unit test package
+
+### Removed
+- Package lock
+
 ## [0.0.1] - 2024-06-27
 ### Changed
 - Project folder structure
