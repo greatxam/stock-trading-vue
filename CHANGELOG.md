@@ -9,6 +9,12 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.3] - 2024-06-28
+### Added
+- Stock Trading App
+- Bootstrap
+- Login Layout
+
 [0.0.2] - 2024-06-28
 ### Added
 - Typescript

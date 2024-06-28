@@ -1,10 +1,12 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router/index1'
+import StockTradingApp from './StockTradingApp.vue'
+import router from './router/'
 
-import './assets/main.css'
+import 'bootstrap-icons/font/bootstrap-icons.scss'
+import * as bootstrap from 'bootstrap'
+import './assets/styles.scss'
 
-const app = createApp(App)
+const app = createApp(StockTradingApp)
 
 app.use(router)
 
