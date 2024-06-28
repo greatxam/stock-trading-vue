@@ -9,6 +9,12 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.4] - 2024-06-28
+### Added
+- Dashboard layout
+- Header menu template
+- Sidebar menu template
+
 [0.0.3] - 2024-06-28
 ### Added
 - Stock Trading App
