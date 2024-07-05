@@ -2,8 +2,9 @@
 import DashboardView from './views/DashboardView.vue'
 import LoginView from './views/LoginView.vue'
 
-// TODO: authenticate user 
-const is_authenticated = true;
+// TODO: authenticate user
+const accessToken = JSON.parse(sessionStorage.getItem(import.meta.env.VITE_API_CACHE_TOKEN_KEY))
+const is_authenticated = false;
 </script>
 
 <template>

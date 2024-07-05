@@ -9,6 +9,12 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.5] - 2024-07-05
+### Added
+- Implement OAuth Login API
+- Environment variables
+- Store access token
+
 [0.0.4] - 2024-06-28
 ### Added
 - Dashboard layout
