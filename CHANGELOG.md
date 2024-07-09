@@ -9,6 +9,11 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.6] - 2024-07-09
+### Added
+- HttpClient plugin
+- Authorization header
+
 [0.0.5] - 2024-07-05
 ### Added
 - Implement OAuth Login API

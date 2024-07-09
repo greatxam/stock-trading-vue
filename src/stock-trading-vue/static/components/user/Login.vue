@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import axios from 'axios'
+import { AxiosInstance } from 'axios'
+import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router';
 
-axios.defaults.baseURL = '/stock_trading_api'
+import { httpClientKey } from '../../plugins/http_client'
+
+const router = useRouter()
+const httpClient = inject<AxiosInstance>(httpClientKey)
 
 const username = ref<string>()
 const password = ref<string>()
 const rememberMe = ref<boolean>(false)
 
-async function onSubmit(e: Event) {
+function onSubmit(e: Event) {
     e.preventDefault()
 
     const headers = {
@@ -21,8 +25,10 @@ async function onSubmit(e: Event) {
         'password': password.value
     }
 
-    axios.post('/auth/token/', data, {'headers': headers})
+    httpClient.post('/auth/token/', data, {'headers': headers})
         .then(function (response) {
+            response.data.expires_in = Date.now() + response.data.expires_in
+
             // TODO: store token in browser local storage
             if (rememberMe.value) {
                 localStorage.setItem(
@@ -37,7 +43,7 @@ async function onSubmit(e: Event) {
         })
         .catch(function (error) {
             console.log(error);
-        })  
+        })
 }
 </script>
 
@@ -51,12 +57,12 @@ async function onSubmit(e: Event) {
             <!-- form.email -->
             <div class="form-floating">
                 <input 
-                    id="username" 
-                    type="text" 
+                    id="username"
+                    type="text"
                     v-model="username"
                     placeholder="name@example.com"
                     class="form-control" >
-                <label for="floatingInput">Email address</label>
+                <label for="username">Email address</label>
             </div>
             <!-- /form.email -->
 
@@ -68,7 +74,7 @@ async function onSubmit(e: Event) {
                     v-model="password"
                     placeholder="Password"
                     class="form-control">
-                <label for="floatingPassword">Password</label>
+                <label for="password">Password</label>
             </div>
             <!-- /form.password -->
 
