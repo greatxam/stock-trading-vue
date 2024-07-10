@@ -9,6 +9,13 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.7] - 2024-07-10
+### Added
+- Pinia package
+- VueUse/Core package
+- User storage
+- Token model
+
 [0.0.6] - 2024-07-09
 ### Added
 - HttpClient plugin
