@@ -2,12 +2,16 @@
 
 ## [Unreleased]
 - Dashboard Page
-- Login Page
 - Stock Page
 - Transaction Page
 - Order Page
 - Trade Page
 - Portfolio Page
+
+[0.0.8] - 2024-07-10
+### Added
+- Logout user
+- Clear user storage
 
 [0.0.7] - 2024-07-10
 ### Added

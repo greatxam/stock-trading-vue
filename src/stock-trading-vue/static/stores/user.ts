@@ -7,7 +7,10 @@ export const useUserStore = defineStore('user', () => {
         || useStorage(import.meta.env.VITE_API_CACHE_TOKEN_KEY, {} as Token, sessionStorage)
 
     const getAccessToken = () => {
-        return token.value.access_token
+        if (token.value) {
+            return token.value.access_token
+        }
+        return null
     }
 
     const setToken = (newToken: Token, local: boolean = false) => {
@@ -19,5 +22,7 @@ export const useUserStore = defineStore('user', () => {
     
     const isAuthenticated = () => getAccessToken()? true : false
 
-    return { isAuthenticated, getAccessToken, setToken }
+    const logout = () => token.value = null
+
+    return { isAuthenticated, getAccessToken, setToken, logout }
 })
