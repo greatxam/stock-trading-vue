@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useUserStore } from '../../stores/user';
+
+const user = useUserStore()
+</script>
+
 <template>
     <div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
         <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
@@ -55,7 +61,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a @click.prevent="user.logout()" class="nav-link d-flex align-items-center gap-2" href="#">
                         <i class="bi bi-door-closed"></i>
                         Log out
                     </a>
