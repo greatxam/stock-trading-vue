@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { AxiosInstance } from 'axios'
 import { ref, inject } from 'vue'
-import { useRouter } from 'vue-router';
 
 import { httpClientKey } from '../../plugins/http_client'
+import { useUserStore } from '../../stores/user';
 
-const router = useRouter()
-const httpClient = inject<AxiosInstance>(httpClientKey)
+const user = useUserStore()
+const httpClient = inject<AxiosInstance>(httpClientKey) as AxiosInstance
 
 const username = ref<string>()
 const password = ref<string>()
@@ -27,19 +27,7 @@ function onSubmit(e: Event) {
 
     httpClient.post('/auth/token/', data, {'headers': headers})
         .then(function (response) {
-            response.data.expires_in = Date.now() + response.data.expires_in
-
-            // TODO: store token in browser local storage
-            if (rememberMe.value) {
-                localStorage.setItem(
-                    import.meta.env.VITE_API_CACHE_TOKEN_KEY, 
-                    JSON.stringify(response.data))
-            } else {
-                sessionStorage.setItem(
-                    import.meta.env.VITE_API_CACHE_TOKEN_KEY, 
-                    JSON.stringify(response.data))
-            }
-            console.log(response.data);
+            user.setToken(response.data, rememberMe.value)
         })
         .catch(function (error) {
             console.log(error);

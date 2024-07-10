@@ -1,10 +1,15 @@
 import type { InjectionKey } from 'vue';
 import axios, { AxiosInstance } from 'axios'
 
+import { useUserStore } from '../stores/user';
+
 export const httpClientKey = Symbol() as InjectionKey<AxiosInstance>
 
 export default {
     install: (app, options) => {
+        // user store
+        const user = useUserStore()
+
         // create axios instance
         const httpClient = axios.create({
             baseURL: import.meta.env.VITE_API_URL + '/' + import.meta.env.VITE_API_VERSION,
@@ -13,7 +18,7 @@ export default {
         // intercept http request before sending
         httpClient.interceptors.request.use(function (config) {
             if (!config.headers.Authorization) {
-                const accessToken = getCachedToken().access_token
+                const accessToken = user.getAccessToken()
                 if (accessToken) {
                     // set access token
                     config.headers.Authorization = 'Bearer ' + accessToken
@@ -27,13 +32,4 @@ export default {
 
         app.provide(httpClientKey, httpClient)
     }
-}
-
-function getCachedToken() {
-    let cacheToken = localStorage.getItem(import.meta.env.VITE_API_CACHE_TOKEN_KEY)
-    if (!cacheToken) {
-        cacheToken = sessionStorage.getItem(import.meta.env.VITE_API_CACHE_TOKEN_KEY)
-    }
-
-    return JSON.parse(cacheToken || '{}')
 }
