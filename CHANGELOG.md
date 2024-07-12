@@ -8,6 +8,11 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.9] - 2024-07-12
+### Added
+- Stock list
+- Stock model
+
 [0.0.8] - 2024-07-10
 ### Added
 - Logout user

@@ -5,3 +5,16 @@ export interface Token {
     scope: string,
     refresh_token: string
 }
+
+export interface Stock {
+    code: string,
+    name: string,
+    price: number
+}
+
+export interface StockListResponse {
+    count: number,
+    next?: string,
+    previous?: string,
+    results: Array<Stock>
+}
