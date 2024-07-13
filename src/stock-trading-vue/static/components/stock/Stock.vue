@@ -36,19 +36,25 @@ watchEffect (async () => {
     </div>
 
     <div class="table-responsive small">
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm align-middle">
             <thead>
                 <tr>
                     <th scope="col">Code</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Price</th>
+                    <th scope="col" class="text-end">Price</th>
+                    <th scope="col" class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="stock of stockListResponse?.results" :key="stock.code">
+                <tr v-for="stock of stockListResponse?.results" :key="stock.id">
                     <th scope="row">{{ stock.code }}</th>
                     <td>{{ stock.name }}</td>
-                    <td>{{ stock.price }}</td>
+                    <td class="text-end">{{ stock.price }}</td>
+                    <td class="text-center">
+                        <a :href="'/stocks/'+stock.id" class="btn btn-outline-primary btn-sm" role="button">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
