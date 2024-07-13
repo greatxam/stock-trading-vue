@@ -7,9 +7,12 @@ export interface Token {
 }
 
 export interface Stock {
+    id: string,
     code: string,
     name: string,
-    price: number
+    price: number,
+    created: Date,
+    modified: Date
 }
 
 export interface StockListResponse {
