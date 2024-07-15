@@ -8,6 +8,10 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.14] -2024-07-15
+### Added
+- Order list component
+
 [0.0.13] - 2024-07-15
 ### Added
 - Http Response model
