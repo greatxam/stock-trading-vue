@@ -8,6 +8,11 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.13] - 2024-07-15
+### Added
+- Http Response model
+- Base API model
+
 [0.0.12] - 2024-07-15
 ### Added
 - Pagination component
