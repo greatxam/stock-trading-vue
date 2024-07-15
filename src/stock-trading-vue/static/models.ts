@@ -29,13 +29,28 @@ export interface StockListResponse extends HttpResponse {
     results: Array<Stock>
 }
 
-export interface Order extends BaseAPIModel{
+export enum TransactionType {
+    BUY = 0,
+    SELL = 1
+}
+
+export enum TransactionStatus {
+    PENDING = 0,
+    CLEARED = 1
+}
+
+export interface Transaction extends BaseAPIModel {
     id: string,
+    type: TransactionType,
+    status: TransactionStatus,
     user: number,
     stock: Stock,
     quantity: number,
     price: number,
     amount: number,
+}
+
+export interface Order extends Transaction {
 }
 
 export interface OrderkListResponse extends HttpResponse {
