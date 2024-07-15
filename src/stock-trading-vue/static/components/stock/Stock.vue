@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { inject, ref, computed, watchEffect } from 'vue';
 import { AxiosInstance } from 'axios';
+
 import { httpClientKey } from '../../plugins/http_client'
 import { StockListResponse } from '../../models';
+import Pagination from '../Pagination.vue';
 
 const httpClient = inject<AxiosInstance>(httpClientKey) as AxiosInstance
 const stockListResponse = ref<StockListResponse>()
@@ -60,21 +62,8 @@ watchEffect (async () => {
         </table>
     </div>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item" :class="[stockListResponse?.previous?'':'disabled']">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li v-for="p in pageCount" :key="p" class="page-item" :class="[currentPage==p?'disabled':'']">
-                <a class="page-link" href="#" @click="changePage(p)">{{ p }}</a>
-            </li>
-            <li class="page-item" :class="[stockListResponse?.next?'':'disabled']">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <Pagination 
+        :current-page="currentPage" 
+        :page-count="pageCount"
+        @change-page="changePage"/>
 </template>

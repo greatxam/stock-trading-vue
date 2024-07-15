@@ -8,6 +8,10 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.12] - 2024-07-15
+### Added
+- Pagination component
+
 [0.0.11] - 2024-07-13
 ### Added
 - Stock detail
