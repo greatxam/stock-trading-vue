@@ -4,6 +4,7 @@ import Dashboard from '../components/dashboard/Dashboard.vue'
 import Stock from '../components/stock/Stock.vue'
 import StockDetail from '../components/stock/StockDetail.vue'
 import Order from '../components/order/Order.vue'
+import OrderDetail from '../components/order/OrderDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +21,7 @@ const router = createRouter({
     },
     {
       path: '/stocks',
-      name: 'stock',
+      name: 'stock-list',
       component: Stock
     },
     {
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/orders',
       name: 'order-list',
       component: Order
+    },
+    {
+      path: '/orders/:id',
+      name: 'order-detail',
+      component: OrderDetail
     },
     {
       path: '/about',
