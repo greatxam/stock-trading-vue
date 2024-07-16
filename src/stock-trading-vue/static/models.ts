@@ -14,15 +14,15 @@ export interface HttpResponse {
 }
 
 export interface BaseAPIModel {
-    id: string,
-    created: Date,
-    modified: Date
+    id?: string,
+    created?: Date,
+    modified?: Date
 }
 
 export interface Stock extends BaseAPIModel {
-    code: string,
-    name: string,
-    price: number,
+    code?: string,
+    name?: string,
+    price?: number,
 }
 
 export interface StockListResponse extends HttpResponse {
@@ -40,11 +40,10 @@ export enum TransactionStatus {
 }
 
 export interface Transaction extends BaseAPIModel {
-    id: string,
     type: TransactionType,
     status: TransactionStatus,
-    user: number,
-    stock: Stock,
+    user?: number,
+    stock?: Stock,
     quantity: number,
     price: number,
     amount: number,

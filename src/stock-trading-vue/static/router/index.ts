@@ -40,6 +40,11 @@ const router = createRouter({
       component: OrderDetail
     },
     {
+      path: '/orders/:type/:stockId',
+      name: 'order-create',
+      component: OrderDetail
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

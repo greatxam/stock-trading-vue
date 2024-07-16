@@ -56,6 +56,10 @@ watchEffect (async () => {
                         <a :href="'/stocks/'+stock.id" class="btn btn-outline-primary btn-sm" role="button">
                             <i class="bi bi-eye"></i>
                         </a>
+                        <span class="m-1"></span>
+                        <a :href="'/orders/buy/'+stock.id" class="btn btn-outline-success btn-sm" role="button">
+                            <i class="bi bi-plus-circle"></i>
+                        </a>
                     </td>
                 </tr>
             </tbody>
