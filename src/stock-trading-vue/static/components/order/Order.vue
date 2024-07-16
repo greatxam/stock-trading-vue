@@ -3,7 +3,7 @@ import { inject, ref, computed, watchEffect } from 'vue';
 import { AxiosInstance } from 'axios';
 
 import { httpClientKey } from '../../plugins/http_client'
-import { OrderkListResponse } from '../../models';
+import { OrderkListResponse, TransactionType } from '../../models';
 import Pagination from '../Pagination.vue';
 
 const httpClient = inject<AxiosInstance>(httpClientKey) as AxiosInstance
@@ -32,7 +32,6 @@ watchEffect (async () => {
 })
 </script>
 
-
 <template>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Open Orders</h1>
@@ -42,6 +41,7 @@ watchEffect (async () => {
         <table class="table table-striped table-sm align-middle">
             <thead>
                 <tr>
+                    <th scope="col">Type</th>
                     <th scope="col">Code</th>
                     <th scope="col">Name</th>
                     <th scope="col" class="text-end">Price</th>
@@ -52,8 +52,9 @@ watchEffect (async () => {
             </thead>
             <tbody>
                 <tr v-for="order of ordersListResponse?.results" :key="order.id">
-                    <th scope="row">{{ order.stock.code }}</th>
-                    <td>{{ order.stock.name }}</td>
+                    <th scope="row" :class="'text-'+(order.type?'danger':'success')">{{ TransactionType[order.type] }}</th>
+                    <td>{{ order.stock?.code }}</td>
+                    <td>{{ order.stock?.name }}</td>
                     <td class="text-end">{{ order.price }}</td>
                     <td class="text-end">{{ order.quantity }}</td>
                     <td class="text-end">{{ order.amount }}</td>
