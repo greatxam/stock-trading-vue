@@ -2,11 +2,14 @@
 
 ## [Unreleased]
 - Dashboard Page
-- Stock Page
 - Transaction Page
 - Order Page
 - Trade Page
 - Portfolio Page
+
+[0.0.19] - 2024-07-16
+### Added
+- Sell Order
 
 [0.0.18] - 2024-07-16
 ### Added
