@@ -7,6 +7,10 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.20] - 2024-07-16
+### Added
+- Delete Order
+
 [0.0.19] - 2024-07-16
 ### Added
 - Sell Order
