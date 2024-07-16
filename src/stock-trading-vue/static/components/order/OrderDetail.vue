@@ -1,47 +1,112 @@
 <script setup lang="ts">
-import { inject, ref, watchEffect } from 'vue';
+import { computed, inject, reactive, ref, watch, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { AxiosInstance } from 'axios';
 
 import { httpClientKey } from '../../plugins/http_client';
-import { Order } from '../../models';
+import { Order, TransactionStatus, TransactionType } from '../../models';
 
 const route = useRoute()
 const httpClient = inject(httpClientKey) as AxiosInstance
-const order = ref<Order>()
+
+const enabledForm = ref<boolean>(false)
+const order: Order = reactive({
+    id: undefined,
+    type: TransactionType.BUY,
+    status: TransactionStatus.PENDING,
+    stock: undefined,
+    quantity: 0,
+    price: 0,
+    amount: 0
+})
+
+const isFormEnabled = computed<boolean>(() => {
+    return (order.id? true: false) || enabledForm.value
+})
+
+const onSave = (async (e: Event) => {
+    e.preventDefault()
+
+    await httpClient.post('/orders/', {
+        type: order.type,
+        stock: order.stock?.id,
+        price: order.price,
+        quantity: order.quantity,
+        amount: order.amount
+    })
+    .then(function (response) {
+        order.id = response.data.id
+    })
+})
 
 watchEffect (async () => {
-    let url = `/orders/${route.params.id}`
-    order.value = await httpClient.get(url)
-        .then(function (response) {
-            return response.data
-        })
-        .catch(function (error) {
-            // TODO: refresh token
-            console.log(error)
-        })
+    if (route.params.id) {
+        let url = `/orders/${route.params.id}`
+        await httpClient.get(url)
+            .then(function (response) {
+                // update reactive order properties
+                order.id = response.data.id
+                order.type = response.data.type
+                order.status = response.data.status
+                order.stock = response.data.stock
+                order.price = response.data.stock?.price
+                order.quantity = response.data.quantity
+                order.amount = response.data.amount
+            })
+            .catch(function (error) {
+                // TODO: refresh token
+                console.log(error)
+            })
+    }
+
+    if(route.params.stockId) {
+        let url = `/stocks/${route.params.stockId}`
+        await httpClient.get(url)
+            .then(function (response) {
+                order.type = TransactionType.BUY
+                if (route.params.type.toLowerCase() === 'sell')
+                    order.type = TransactionType.SELL
+                order.stock = response.data
+                order.price = response.data.price
+            })
+            .catch(function (error) {
+                // TODO: refresh token
+                console.log(error)
+            })
+    }
+})
+
+watch(order, (newOrder) => {
+    order.amount = newOrder.quantity * newOrder.price
 })
 </script>
 
 <template>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2"><span class="badge text-bg-primary">{{ order?.type?'Sell':'Buy' }}</span> {{ order?.stock.code }}</h1>
+        <h1 class="h2"><span class="badge text-bg-success">{{ order.type?'Sell':'Buy' }}</span> {{ order.stock?.code }}</h1>
 
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="/orders" class="btn btn-outline-primary" role="button">
+            <a :href="isFormEnabled?'/orders':'/stocks'" class="btn btn-outline-primary" role="button">
                 <i class="bi bi-arrow-left-circle"></i>
             </a>
-        </div>        
+        </div>
     </div>
 
     <div class="row">
-        <form class="col-4">
-            <fieldset disabled>
+        <form                         
+            @submit="onSave"
+            class="col-4">
+            <fieldset :disabled="isFormEnabled">
                 <!-- order.stock -->
                 <div class="row mb-3">
                     <label for="orderStock" class="col-sm-3 col-form-label">Stock</label>
                     <div class="col-sm-9">
-                        <input :value="order?.stock.code" type="text" class="form-control" id="orderStock">
+                        <input 
+                            disabled
+                            :value="order.stock?.code"
+                            id="orderStock"
+                            type="text" 
+                            class="form-control">
                     </div>
                 </div>
                 <!-- /order.stock -->
@@ -50,7 +115,12 @@ watchEffect (async () => {
                 <div class="row mb-3">
                     <label for="orderQuantity" class="col-sm-3 col-form-label">Quantity</label>
                     <div class="col-sm-9">
-                        <input :value="order?.quantity" type="text" class="form-control" id="orderQuantity">
+                        <input 
+                            v-model.lazy="order.quantity"
+                            id="orderQuantity"
+                            type="number" 
+                            min="1"
+                            class="form-control text-end">
                     </div>
                 </div>
                 <!-- /order.quantity -->
@@ -59,7 +129,11 @@ watchEffect (async () => {
                 <div class="row mb-3">
                     <label for="orderPrice" class="col-sm-3 col-form-label">Price</label>
                     <div class="col-sm-9">
-                        <input :value="order?.price" type="text" class="form-control" id="orderPrice">
+                        <input
+                            v-model.lazy="order.price"
+                            id="orderPrice"
+                            type="number"
+                            class="form-control text-end">
                     </div>
                 </div>
                 <!-- /order.price -->
@@ -68,11 +142,27 @@ watchEffect (async () => {
                 <div class="row mb-3">
                     <label for="orderAmount" class="col-sm-3 col-form-label">Amount</label>
                     <div class="col-sm-9">
-                        <input :value="order?.amount" type="text" class="form-control" id="orderAmount">
+                        <input
+                            disabled
+                            v-model.lazy="order.amount"
+                            id="orderAmount"
+                            type="number"
+                            class="form-control text-end">
                     </div>
                 </div>
                 <!-- /order.amount -->
             </fieldset>
+
+            <div class="row mb-3 text-end">
+                <div class="col-sm-12">
+                    <button 
+                        v-if="!isFormEnabled" 
+                        type="submit" 
+                        class="btn btn-outline-success">
+                        Save
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </template>

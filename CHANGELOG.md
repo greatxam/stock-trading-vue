@@ -8,6 +8,13 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.16] - 2024-07-16
+### Added
+- Create Order
+
+### Changed
+- Refactor models
+
 [0.0.15] - 2024-07-15
 ### Added
 - Order detail component
