@@ -8,6 +8,10 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.17] - 2024-07-16
+### Added
+- Alert message
+
 [0.0.16] - 2024-07-16
 ### Added
 - Create Order
