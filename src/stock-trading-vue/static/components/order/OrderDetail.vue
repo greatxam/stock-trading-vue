@@ -24,8 +24,11 @@ const order: Order = reactive({
     amount: 0
 })
 
-const isFormEnabled = computed<boolean>(() => {
-    return (order.id? true: false) || enabledForm.value
+const isFormDisabled = computed<boolean | undefined>(() => {
+    return (enabledForm.value || !order.id)?undefined:true
+})
+const enableEdit = (() => {
+    enabledForm.value = !enabledForm.value
 })
 
 const onSave = (async (e: Event) => {
@@ -91,20 +94,27 @@ watch(order, (newOrder) => {
 
 <template>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2"><span class="badge text-bg-success">{{ order.type?'Sell':'Buy' }}</span> {{ order.stock?.code }}</h1>
+        <h1 class="h2">
+            <span class="badge text-bg-success">{{ order.type?'Sell':'Buy' }}</span> {{ order.stock?.code }}
+            <button
+                @click="enableEdit"
+                v-if="order.id"
+                type="button"
+                class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-pencil"></i>
+            </button>
+        </h1>
 
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a :href="isFormEnabled?'/orders':'/stocks'" class="btn btn-outline-primary" role="button">
+            <a :href="isFormDisabled?'/orders':'/stocks'" class="btn btn-outline-primary" role="button">
                 <i class="bi bi-arrow-left-circle"></i>
             </a>
         </div>
     </div>
 
     <div class="row">
-        <form                         
-            @submit="onSave"
-            class="col-4">
-            <fieldset :disabled="isFormEnabled">
+        <form @submit="onSave" class="col-4">
+            <fieldset :disabled="isFormDisabled">
                 <!-- order.stock -->
                 <div class="row mb-3">
                     <label for="orderStock" class="col-sm-3 col-form-label">Stock</label>
@@ -164,7 +174,7 @@ watch(order, (newOrder) => {
             <div class="row mb-3 text-end">
                 <div class="col-sm-12">
                     <button 
-                        v-if="!isFormEnabled" 
+                        v-if="!isFormDisabled" 
                         type="submit" 
                         class="btn btn-outline-success">
                         Save
