@@ -8,6 +8,13 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.18] - 2024-07-16
+### Added
+- Update order
+
+### Changed
+- Disabled or enabled order form
+
 [0.0.17] - 2024-07-16
 ### Added
 - Alert message
