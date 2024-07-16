@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { computed, inject, reactive, ref, watch, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { AxiosInstance } from 'axios';
 
 import { httpClientKey } from '../../plugins/http_client';
 import { Order, TransactionStatus, TransactionType } from '../../models';
 
+const emits = defineEmits<{
+    (e: 'alertMessage', message: string, type: string)
+}>()
+const router = useRouter()
 const route = useRoute()
 const httpClient = inject(httpClientKey) as AxiosInstance
 
@@ -36,6 +40,10 @@ const onSave = (async (e: Event) => {
     })
     .then(function (response) {
         order.id = response.data.id
+
+        const message = `Successfully place an order to ${TransactionType[order.type]} ${order.stock?.code}.`
+        emits('alertMessage', message, 'success')
+        router.push('/orders')
     })
 })
 
