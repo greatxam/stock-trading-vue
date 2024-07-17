@@ -7,6 +7,12 @@
 - Trade Page
 - Portfolio Page
 
+[0.0.21] - 2024-07-17
+### Added
+- Trade component
+- Trade router
+- Trade sidebar
+
 [0.0.20] - 2024-07-16
 ### Added
 - Delete Order
