@@ -55,3 +55,10 @@ export interface Order extends Transaction {
 export interface OrderkListResponse extends HttpResponse {
     results: Array<Order>
 }
+
+export interface Trade extends Transaction {
+}
+
+export interface TradeListResponse extends HttpResponse {
+    results: Array<Trade>
+}
